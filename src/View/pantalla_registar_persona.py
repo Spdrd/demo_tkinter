@@ -1,6 +1,6 @@
 import tkinter as tk
-from Dominio import Persona as p
-from Negocio import negocio_persona as negocio
+from Entities import Persona as p
+from Services import servicio_reporte_persona
 
 personas = []
 
@@ -32,7 +32,7 @@ def obtener_datos():
     print(contenido_apellido)
 
     personas.append(p.Persona(contenido_nombre, contenido_apellido).to_arr())
-    negocio.generar_reporte(personas)
+    servicio_reporte_persona.generar_reporte(personas)
 
 # Buttons
 boton_ingresar = tk.Button(

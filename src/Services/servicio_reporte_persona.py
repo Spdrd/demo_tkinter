@@ -1,5 +1,5 @@
 from fpdf import FPDF
-from Dominio import Persona as p
+from Entities import Persona as p
 
 def generar_reporte(datos: dict):
 
@@ -27,7 +27,7 @@ def generar_reporte(datos: dict):
 
 
     # Guardar el archivo
-    nombre_pdf = "ejemplo_fpdf.pdf"
+    nombre_pdf = "reporte.pdf"
     pdf.output(nombre_pdf)
 
     print(f"PDF generado: {nombre_pdf}")

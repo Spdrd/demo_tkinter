@@ -22,11 +22,28 @@ class city_display():
         for i in range(len(elements)):
             elements[i][0].grid(row=i, column=0, padx=10, pady=10)
             elements[i][1].grid(row=i, column=1, padx=10, pady=10)
-    
-    def get_info(self):
-        return City.City(self.name_entry.get(), code=self.code_entry.get())
 
-if __name__ == "__main__":
+    def get_info(self):
+        return City.City(code=self.code_entry.get(), name=self.name_entry.get())
+    
+    def get_code(self):
+        return self.code_entry.get()
+    
+    def get_name(self):
+        return self.name_entry.get()
+    
+    def set_info(self, city: City.City):
+        self.code_entry.delete(0, ctk.END)
+        self.name_entry.delete(0, ctk.END)
+        self.code_entry.insert(0, city.code)
+        self.name_entry.insert(0, city.name)
+
+def main():
     app = ctk.CTk()
-    city_display(app)
+    view = city_display(app)
+    city= City.City("aa", "bb")
+    view.set_info(city)
     app.mainloop()
+ 
+if __name__ == "__main__":
+    main()

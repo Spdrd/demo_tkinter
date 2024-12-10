@@ -1,4 +1,4 @@
-from Vista import pantalla_registar_persona as p
+from View import manage_cities_view
 
 if __name__ == "__main__":
-    p.pantalla()
+    manage_cities_view.main()

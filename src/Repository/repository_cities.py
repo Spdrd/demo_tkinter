@@ -2,6 +2,37 @@ import psycopg2
 import json
 from Entities import City 
 
+def create_cities_table():
+
+    with open("src\Repository\db_config.json", "r") as file:
+        db_config = json.load(file)
+
+    try:
+        # Establecer la conexión
+        conn = psycopg2.connect(**db_config)
+        print("Conexión exitosa a la base de datos")
+
+        # Crear un cursor para ejecutar consultas
+        cursor = conn.cursor()
+
+        query = "CREATE TABLE IF NOT EXISTS cities(ID SERIAL PRIMARY KEY,CODE VARCHAR(100) UNIQUE,NAME VARCHAR(100))"
+        cursor.execute(query)
+
+        conn.commit()
+
+        # Cerrar el cursor
+        cursor.close()
+
+    except psycopg2.Error as e:
+        print(f"Error al conectar a la base de datos: {e}")
+    finally:
+        # Asegurarse de cerrar la conexión
+        if conn:
+            conn.close()
+            print("Conexión cerrada")
+
+
+
 def create_city(city: City.City):
 
     with open("src\Repository\db_config.json", "r") as file:
@@ -250,7 +281,7 @@ def read_max_city_id():
         if conn:
             conn.close()
             print("Conexión cerrada")
-
+        
         return (data[0])
 
 def get_atributes():

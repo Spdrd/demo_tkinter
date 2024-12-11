@@ -67,7 +67,6 @@ def read_city(id=None, code=None):
         cursor = conn.cursor()
 
         # Ejecutar una consulta
-        print(f"index{index}")
         if index == "first":
             query = f"SELECT * FROM cities WHERE id = (SELECT MIN(id) FROM cities)"
         elif index == "last":
@@ -101,9 +100,9 @@ def read_city(id=None, code=None):
     
         if data == None:
             return -1
-        else:
-            return (data, city)
-
+        elif not index == "":
+            data = data[0]
+        return (data, city)
 def update_city(code, name):
 
     with open("src\Repository\db_config.json", "r") as file:

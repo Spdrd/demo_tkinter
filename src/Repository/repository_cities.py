@@ -103,7 +103,7 @@ def read_city(id=None, code=None):
         elif not index == "":
             data = data[0]
         return (data, city)
-def update_city(code, name):
+def update_city(city: City.City):
 
     with open("src\Repository\db_config.json", "r") as file:
         db_config = json.load(file)
@@ -116,10 +116,10 @@ def update_city(code, name):
         # Crear un cursor para ejecutar consultas
         cursor = conn.cursor()
 
-        query = f"UPDATE cities SET name = '{name}' WHERE code = '{code}'"
+        query = f"UPDATE cities SET name = '{city.name}' WHERE code = '{city.code}'"
         cursor.execute(query)
 
-        query = f"SELECT id FROM cities WHERE code = '{code}'"
+        query = f"SELECT id FROM cities WHERE code = '{city.code}'"
         cursor.execute(query)
 
         conn.commit()
@@ -287,7 +287,7 @@ def get_atributes():
     
 
 def main():
-    update_city(code="BOG", name="BOGLONIA")
+    update_city(code="LIM", name="LIMAR")
 
 if __name__ == "__main__":
     main()

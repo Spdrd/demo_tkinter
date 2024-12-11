@@ -46,6 +46,7 @@ def create_city(city: City.City):
 
 def read_city(id=None, code=None):
     index_name = ""
+    index = ""
 
     if not id == None:
         index_name = "id"
@@ -66,6 +67,7 @@ def read_city(id=None, code=None):
         cursor = conn.cursor()
 
         # Ejecutar una consulta
+        print(f"index{index}")
         if index == "first":
             query = f"SELECT * FROM cities WHERE id = (SELECT MIN(id) FROM cities)"
         elif index == "last":
@@ -78,8 +80,10 @@ def read_city(id=None, code=None):
         
         cursor.execute(query)
         conn.commit()
-
-        data = cursor.fetchone()
+        if index == "":
+            data = cursor.fetchall()
+        else:
+            data = cursor.fetchone()
 
         city = City.City()
         city.from_tuple(data)
@@ -94,8 +98,11 @@ def read_city(id=None, code=None):
         if conn:
             conn.close()
             print("Conexión cerrada")
-
-        return (data[0], city)
+    
+        if data == None:
+            return -1
+        else:
+            return (data, city)
 
 def update_city(code, name):
 
@@ -178,6 +185,107 @@ def delete_city(id=None, code=None):
             if conn:
                 conn.close()
                 print("Conexión cerrada")
+
+def read_min_city_id():
+
+    with open("src\Repository\db_config.json", "r") as file:
+        db_config = json.load(file)
+
+    try:
+        # Establecer la conexión
+        conn = psycopg2.connect(**db_config)
+        print("Conexión exitosa a la base de datos")
+
+        # Crear un cursor para ejecutar consultas
+        cursor = conn.cursor()
+
+        query = "SELECT MIN(id) FROM cities"
+
+        
+        cursor.execute(query)
+        conn.commit()
+
+        data = cursor.fetchone()
+
+        # Cerrar el cursor
+        cursor.close()
+
+    except psycopg2.Error as e:
+        print(f"Error al conectar a la base de datos: {e}")
+    finally:
+        # Asegurarse de cerrar la conexión
+        if conn:
+            conn.close()
+            print("Conexión cerrada")
+
+        return (data[0])
+
+def read_max_city_id():
+
+    with open("src\Repository\db_config.json", "r") as file:
+        db_config = json.load(file)
+
+    try:
+        # Establecer la conexión
+        conn = psycopg2.connect(**db_config)
+        print("Conexión exitosa a la base de datos")
+
+        # Crear un cursor para ejecutar consultas
+        cursor = conn.cursor()
+
+        query = "SELECT MAX(id) FROM cities"
+
+        
+        cursor.execute(query)
+        conn.commit()
+
+        data = cursor.fetchone()
+
+        # Cerrar el cursor
+        cursor.close()
+
+    except psycopg2.Error as e:
+        print(f"Error al conectar a la base de datos: {e}")
+    finally:
+        # Asegurarse de cerrar la conexión
+        if conn:
+            conn.close()
+            print("Conexión cerrada")
+
+        return (data[0])
+
+def get_atributes():
+    with open("src\Repository\db_config.json", "r") as file:
+        db_config = json.load(file)
+
+    try:
+        # Establecer la conexión
+        conn = psycopg2.connect(**db_config)
+        print("Conexión exitosa a la base de datos")
+
+        # Crear un cursor para ejecutar consultas
+        cursor = conn.cursor()
+
+        query = "SELECT column_name FROM information_schema.columns WHERE table_name = 'cities'"
+
+        cursor.execute(query)
+        conn.commit()
+
+        data = cursor.fetchall()
+
+        # Cerrar el cursor
+        cursor.close()
+
+    except psycopg2.Error as e:
+        print(f"Error al conectar a la base de datos: {e}")
+    finally:
+        # Asegurarse de cerrar la conexión
+        if conn:
+            conn.close()
+            print("Conexión cerrada")
+        print(data)
+        return (data)
+    
 
 def main():
     update_city(code="BOG", name="BOGLONIA")

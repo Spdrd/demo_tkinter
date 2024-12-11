@@ -14,7 +14,15 @@ class manage_ciities_view:
 
         app.geometry(f"{ancho}x{alto}")
         city_display_frame = city_display.city_display(app)
-        crud_display_frame = crud_display.crud_display(app, repository_cities.create_city, repository_cities.read_city, repository_cities.update_city, repository_cities.delete_city, [city_display_frame])
+        crud_display_frame = crud_display.crud_display(app, 
+                                                       repository_cities.create_city, 
+                                                       repository_cities.read_city, 
+                                                       repository_cities.update_city, 
+                                                       repository_cities.delete_city, 
+                                                       repository_cities.read_max_city_id, 
+                                                       repository_cities.read_min_city_id,
+                                                       repository_cities.get_atributes,
+                                                       [city_display_frame])
 
         app.mainloop()
 

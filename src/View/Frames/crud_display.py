@@ -3,7 +3,7 @@ from PIL import Image
 from Entities import City
 from View.Frames import table_display
 
-w_buttons = 100
+w_buttons = 50
 
 class crud_display:
 
@@ -24,80 +24,84 @@ class crud_display:
         self.check_min_max()
 
         frame = ctk.CTkFrame(app)
-        frame.pack(fill="y", side="left")
+        frame.pack(fill="x", padx=1, pady=1)
 
         elements = []
 
         plus_icon = Image.open("src\View\Icons\plus_icon.png")
-        button_create = ctk.CTkButton(frame, 
-                                      text="Crear Ciudad",
+        button_create = ctk.CTkButton(frame,
+                                      text="",
                                       image=ctk.CTkImage(plus_icon), 
                                       corner_radius=32, 
-                                      width=w_buttons, 
+                                      width=w_buttons,
                                       command=lambda: self.on_create(c_func, display[0]))
         elements.append(button_create)
 
         update_icon = Image.open(r"src\View\Icons\update_icon.png")
-        button_update = ctk.CTkButton(frame, 
-                                      text="Actualizar Ciudad",
+        button_update = ctk.CTkButton(frame,
+                                      text="",
                                       image=ctk.CTkImage(update_icon), 
                                       corner_radius=32, 
-                                      width=w_buttons, 
+                                      width=w_buttons,
                                       command=lambda: u_func(display[0].get_info()))
         elements.append(button_update)
 
         minus_icon = Image.open("src\View\Icons\minus_icon.png")
-        button_delete = ctk.CTkButton(frame, 
-                                      text="Eliminar Ciudad",
+        button_delete = ctk.CTkButton(frame,
+                                      text="",
                                       image=ctk.CTkImage(minus_icon), 
                                       corner_radius=32, 
-                                      width=w_buttons, 
+                                      width=w_buttons,
                                       command=lambda: self.on_delete(d_func, display[0]))
         elements.append(button_delete)
 
         first_icon = Image.open(r"src\View\Icons\first_icon.png")
-        button_first = ctk.CTkButton(frame, 
-                                     text="Primera Ciudad",
+        button_first = ctk.CTkButton(frame,
+                                     text="",
                                      image=ctk.CTkImage(first_icon), 
                                      corner_radius=32, 
-                                     width=w_buttons, 
+                                      width=w_buttons,
                                      command=lambda: self.on_first(r_func, display[0]))
         elements.append(button_first)
 
         up_icon = Image.open(r"src\View\Icons\up_icon.png")
-        button_up = ctk.CTkButton(frame, 
-                                  text="Anterior Ciudad",
+        button_up = ctk.CTkButton(frame,
+                                  text="",
                                   image=ctk.CTkImage(up_icon), 
-                                  corner_radius=32, width=w_buttons, 
+                                  corner_radius=32, 
+                                  width=w_buttons,
                                   command= lambda: self.on_back(r_func, display[0]))
         elements.append(button_up)
         
         browse_icon = Image.open("src\View\Icons\lines_icon.png")
-        button_browse = ctk.CTkButton(frame, 
-                                      text="Buscar Ciudad",
+        button_browse = ctk.CTkButton(frame,
+                                      text="", 
                                       image=ctk.CTkImage(browse_icon), 
-                                      corner_radius=32, 
+                                      corner_radius=32,
                                       width=w_buttons,
                                       command=lambda: self.on_browse(table_atributes_func, r_func))
         elements.append(button_browse)
 
         down_icon = Image.open("src\View\Icons\down_icon.png")
-        button_down = ctk.CTkButton(frame, text="Siguiente Ciudad",
+        button_down = ctk.CTkButton(frame,
+                                    text="",
                                     image=ctk.CTkImage(down_icon), 
-                                    corner_radius=32, width=w_buttons, 
+                                    corner_radius=32, 
+                                    width=w_buttons,
                                     command=lambda: self.on_next(r_func, display[0]))
         elements.append(button_down)
 
         last_icon = Image.open("src\View\Icons\last_icon.png")
-        button_last = ctk.CTkButton(frame, text="Ultima Ciudad",
+        button_last = ctk.CTkButton(frame,
+                                    text="",
                                     image=ctk.CTkImage(last_icon), 
                                     corner_radius=32, 
-                                    width=w_buttons, 
+                                    width=w_buttons,
                                     command=lambda: self.on_last(r_func, display[0]))
         elements.append(button_last)
 
         for i in range(len(elements)):
-            elements[i].grid(row=i, column=0, padx=10, pady=10)
+            elements[i].grid(row=0, column=i, padx=10, pady=10)
 
     def check_min_max(self):
         self.min_id = self.min_id_func()

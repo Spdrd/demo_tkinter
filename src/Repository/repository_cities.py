@@ -1,15 +1,21 @@
 import psycopg2
 import json
-from Entities import City 
+from Entities import City
+
+def connect_db_by_json():
+    with open("src\Repository\db_config.json", "r") as file:
+        db_config = json.load(file)
+        
+    return psycopg2.connect(**db_config)
+
+def connect_db():
+    return connect_db_by_json()
 
 def create_cities_table():
 
-    with open("src\Repository\db_config.json", "r") as file:
-        db_config = json.load(file)
-
     try:
         # Establecer la conexión
-        conn = psycopg2.connect(**db_config)
+        conn = connect_db_by_json()
         print("Conexión exitosa a la base de datos")
 
         # Crear un cursor para ejecutar consultas
@@ -40,7 +46,7 @@ def create_city(city: City.City):
 
     try:
         # Establecer la conexión
-        conn = psycopg2.connect(**db_config)
+        conn = connect_db_by_json()
         print("Conexión exitosa a la base de datos")
 
         # Crear un cursor para ejecutar consultas
@@ -91,7 +97,7 @@ def read_city(id=None, code=None):
 
     try:
         # Establecer la conexión
-        conn = psycopg2.connect(**db_config)
+        conn = connect_db_by_json()
         print("Conexión exitosa a la base de datos")
 
         # Crear un cursor para ejecutar consultas
@@ -141,7 +147,7 @@ def update_city(city: City.City):
 
     try:
         # Establecer la conexión
-        conn = psycopg2.connect(**db_config)
+        conn = connect_db_by_json()
         print("Conexión exitosa a la base de datos")
 
         # Crear un cursor para ejecutar consultas
@@ -190,7 +196,7 @@ def delete_city(id=None, code=None):
 
         try:
             # Establecer la conexión
-            conn = psycopg2.connect(**db_config)
+            conn = connect_db_by_json()
             print("Conexión exitosa a la base de datos")
 
             # Crear un cursor para ejecutar consultas
@@ -223,7 +229,7 @@ def read_min_city_id():
 
     try:
         # Establecer la conexión
-        conn = psycopg2.connect(**db_config)
+        conn = connect_db_by_json()
         print("Conexión exitosa a la base de datos")
 
         # Crear un cursor para ejecutar consultas
@@ -257,7 +263,7 @@ def read_max_city_id():
 
     try:
         # Establecer la conexión
-        conn = psycopg2.connect(**db_config)
+        conn = connect_db_by_json()
         print("Conexión exitosa a la base de datos")
 
         # Crear un cursor para ejecutar consultas
@@ -290,7 +296,7 @@ def get_atributes():
 
     try:
         # Establecer la conexión
-        conn = psycopg2.connect(**db_config)
+        conn = connect_db_by_json()
         print("Conexión exitosa a la base de datos")
 
         # Crear un cursor para ejecutar consultas

@@ -6,7 +6,7 @@ class city_display():
     def __init__(self, app: ctk.CTk):
 
         frame = ctk.CTkFrame(app)
-        frame.pack(fill="y", side="left", padx=1)
+        frame.pack(fill="x", padx=1, pady=1)
 
         # Create elements
 

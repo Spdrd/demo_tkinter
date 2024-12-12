@@ -5,11 +5,67 @@ from Entities import City
 def connect_db_by_json():
     with open("src\Repository\db_config.json", "r") as file:
         db_config = json.load(file)
-        
+
     return psycopg2.connect(**db_config)
 
 def connect_db():
     return connect_db_by_json()
+
+def test():
+    index_name = ""
+    index = ""
+
+    if not id == None:
+        index_name = "id"
+        index = id
+    elif not code== None:
+        index_name = "code"
+        index = code
+
+    try:
+        # Establecer la conexión
+        conn = connect_db_by_json()
+        print("Conexión exitosa a la base de datos")
+
+        # Crear un cursor para ejecutar consultas
+        cursor = conn.cursor()
+        print(f"index name: {index_name} index: {index}")
+        # Ejecutar una consulta
+        if index == "first":
+            query = f"SELECT * FROM cities WHERE id = (SELECT MIN(id) FROM cities)"
+        elif index == "last":
+            query = f"SELECT * FROM cities WHERE id = (SELECT MAX(id) FROM cities)"
+        elif index_name == "":
+            query = "SELECT * FROM cities"
+        else:
+            query = f"SELECT * FROM cities WHERE {index_name} = '{index}'"
+
+        
+        cursor.execute(query)
+        conn.commit()
+        if index == "":
+            data = cursor.fetchall()
+        else:
+            data = cursor.fetchone()
+
+        city = City.City()
+        city.from_tuple(data)
+
+        # Cerrar el cursor
+        cursor.close()
+
+    except psycopg2.Error as e:
+        print(f"Error al conectar a la base de datos: {e}")
+    finally:
+        # Asegurarse de cerrar la conexión
+        if conn:
+            conn.close()
+            print("Conexión cerrada")
+        if data == None:
+            return -1
+        elif not index == "":
+            data = data[0]
+        return (data, city)
 
 def create_cities_table():
 
@@ -36,8 +92,6 @@ def create_cities_table():
         if conn:
             conn.close()
             print("Conexión cerrada")
-
-
 
 def create_city(city: City.City):
 
@@ -140,6 +194,7 @@ def read_city(id=None, code=None):
         elif not index == "":
             data = data[0]
         return (data, city)
+
 def update_city(city: City.City):
 
     with open("src\Repository\db_config.json", "r") as file:

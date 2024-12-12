@@ -1,3 +1,3 @@
-from Repository import repository_cities
+from Repository.repository_cities import *
 
-repository_cities.main()
+test()

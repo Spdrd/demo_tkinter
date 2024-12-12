@@ -1,6 +1,5 @@
 import customtkinter as ctk
 from PIL import Image
-from Entities import City
 from View.Frames import table_display
 
 w_buttons = 50
@@ -18,10 +17,12 @@ class crud_display:
                  table_atributes_func, 
                  display):
 
-        self.on_id = -1
         self.min_id_func = min_id_func
         self.max_id_func = max_id_func
-        self.check_min_max()
+
+        if not self.check_empty(r_func):
+            self.check_min_max()
+            self.on_id = self.min_id
 
         frame = ctk.CTkFrame(app)
         frame.pack(fill="x", padx=1, pady=1)
@@ -102,13 +103,22 @@ class crud_display:
 
         for i in range(len(elements)):
             elements[i].grid(row=0, column=i, padx=10, pady=10)
-
+    
+    def check_empty(self, func):
+        is_empty = func()[0] == []
+        if is_empty:
+            self.on_id = 0
+            self.min_id = 0
+            self.max_id = 0
+    
+        return is_empty
+    
     def check_min_max(self):
         self.min_id = self.min_id_func()
         self.max_id = self.max_id_func()
 
     def on_create(self, func, display):
-        func(display.get_info())
+        self.on_id = func(display.get_info())
         self.check_min_max()
     
     def on_delete(self, func, display):
@@ -127,32 +137,31 @@ class crud_display:
         display.set_info(data[1])
 
     def on_back(self, func, display):
-        id = self.on_id
+        self.on_id = self.on_id
         while True:
-            if id == -1:
-                id = 1
-            elif not id == self.min_id:
-                id -= 1
-            data = func(id=id)
-            if not data == -1:
+            self.check_empty(func)
+            if not self.on_id == self.min_id:
+                self.on_id -= 1
+            data = func(id=self.on_id)
+            if (not data == -1) or self.on_id == 0:
                 break
 
-        self.on_id = data[0]
-        display.set_info(data[1])
+        if not self.on_id == 0:
+            self.on_id = data[0]
+            display.set_info(data[1])
 
     def on_next(self, func, display):
-        id = self.on_id
         while True:
-            if id == -1:
-                id = 1
-            elif not id == self.max_id:
-                id += 1
-            data = func(id=id)
-            if not data == -1:
+            self.check_empty(func)
+            if not self.on_id == self.max_id:
+                self.on_id += 1
+            data = func(id=self.on_id)
+            print(f"{self.on_id}, {self.min_id}, {self.max_id}")
+            if (not data == -1) or self.on_id == 0:
                 break
-
-        self.on_id = data[0]
-        display.set_info(data[1])
+        if not self.on_id == 0:
+            self.on_id = data[0]
+            display.set_info(data[1])
 
     def on_browse(self, head_func, data_func):
         dialog = ctk.CTk()

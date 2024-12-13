@@ -1,5 +1,5 @@
 from customtkinter import *
-from Entities.City import *
+from Entities.City_demo import *
 
 class city_display():
 

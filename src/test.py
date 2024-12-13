@@ -1,3 +1,3 @@
-from Repository.repository_cities import *
+from Repository.repository_cities_demo import *
 
 test()

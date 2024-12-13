@@ -1,6 +1,6 @@
 import psycopg2
 import json
-from Entities import City
+from Entities import City_demo
 
 def connect_db_by_json():
     with open("src\Repository\db_config.json", "r") as file:
@@ -48,7 +48,7 @@ def test():
         else:
             data = cursor.fetchone()
 
-        city = City.City()
+        city = City_demo.City()
         city.from_tuple(data)
 
         # Cerrar el cursor
@@ -93,7 +93,7 @@ def create_cities_table():
             conn.close()
             print("Conexión cerrada")
 
-def create_city(city: City.City):
+def create_city(city: City_demo.City):
 
     with open("src\Repository\db_config.json", "r") as file:
         db_config = json.load(file)
@@ -175,7 +175,7 @@ def read_city(id=None, code=None):
         else:
             data = cursor.fetchone()
 
-        city = City.City()
+        city = City_demo.City()
         city.from_tuple(data)
 
         # Cerrar el cursor
@@ -195,7 +195,7 @@ def read_city(id=None, code=None):
             data = data[0]
         return (data, city)
 
-def update_city(city: City.City):
+def update_city(city: City_demo.City):
 
     with open("src\Repository\db_config.json", "r") as file:
         db_config = json.load(file)

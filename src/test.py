@@ -1,3 +1,5 @@
-from Repository.repository_cities_demo import *
+from View.manage_cities_view import *
+from View.t_ciudades_view import *
 
-test()
+if __name__ == "__main__":
+    t_ciudades_view()

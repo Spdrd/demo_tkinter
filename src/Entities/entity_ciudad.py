@@ -1,4 +1,4 @@
-class Ciudad:
+class entity_ciudad:
     def __init__(self, codigo=-1, nombre=""):
         self.codigo = codigo
         self.nombre = nombre

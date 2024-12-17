@@ -4,10 +4,13 @@ import json
 class repository:
 
     def __init__(self, table_name: str, atributes: tuple, atributes_types: tuple):
-
         self.table_name = table_name
         self.atributes = atributes
         self.atributes_types = atributes_types
+        self.create_table()
+    
+    def get_pk_atribute(self):
+        return self.atributes[0]
 
     def atributes_to_string(self):
         str_atributes = "("
@@ -72,11 +75,12 @@ class repository:
             cursor = conn.cursor()
 
             # Ejecutar una consulta
-            query = f"INSERT INTO {self.table_name} {self.atributes_to_string()} VALUES {data}"
-
+            query = f"INSERT INTO {self.table_name} {self.atributes_to_string()} VALUES {tuple(data)}"
+            print(query)
             cursor.execute(query)
 
             query = f"SELECT ROW_NUMBER() OVER (ORDER BY {self.atributes[0]}) FROM {self.table_name}"
+            print(query)
             cursor.execute(query)
             conn.commit()
             id = cursor.fetchone()[0]
@@ -97,7 +101,6 @@ class repository:
                 print("Conexión cerrada")
 
     def read(self, index = "", index_name = ""):
-        index_name = ""
 
         with open("src\Repository\db_config.json", "r") as file:
             db_config = json.load(file)
@@ -115,6 +118,9 @@ class repository:
                 query = f"SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY {self.atributes[0]}) AS n FROM {self.table_name}) WHERE n = (SELECT MIN(n) FROM (SELECT ROW_NUMBER() OVER (ORDER BY {self.table_name}) AS n, * FROM {self.table_name}))"
             elif index == "last":
                 query = f"SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY {self.atributes[0]}) AS n FROM {self.table_name}) WHERE n = (SELECT MAX(n) FROM (SELECT ROW_NUMBER() OVER (ORDER BY {self.table_name}) AS n, * FROM {self.table_name}))"
+            elif index_name == "reg":
+                print("a")
+                query = f"SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY {self.atributes[0]}) AS n FROM {self.table_name}) WHERE n = {index}"
             elif not index_name == "":
                 if isinstance(index, str):
                     query = f"SELECT * FROM {self.table_name} WHERE {index_name} = '{index}'"
@@ -124,7 +130,7 @@ class repository:
             else:
                 query = f"SELECT * FROM {self.table_name}"
 
-            
+            print(query)
             cursor.execute(query)
             conn.commit()
             if index_name == "":
@@ -142,7 +148,8 @@ class repository:
             if conn:
                 conn.close()
                 print("Conexión cerrada")
-
+            
+            print(f"read: {data}")
             return (data)
 
     def update(self, data: tuple):
@@ -195,7 +202,7 @@ class repository:
                 conn.close()
                 print("Conexión cerrada")
 
-    def delete(self, index = "", index_name=""):
+    def delete(self, index, index_name=""):
 
         if index_name == "":
             print("Indice no recibido") 
@@ -213,11 +220,12 @@ class repository:
 
                 # Ejecutar una consulta
                 if isinstance(index, str):
+                    print(f"index: {index}")
                     query = f"DELETE FROM {self.table_name} WHERE {index_name} = '{index}'"
                 else:
                     query = f"DELETE FROM {self.table_name} WHERE {index_name} = {index}"
 
-                
+                print(query)
                 cursor.execute(query)
                 conn.commit()
 
@@ -339,8 +347,6 @@ def main():
     atributes_types = ("NUMERIC(5,0) PRIMARY KEY", "VARCHAR(30)")
 
     repo = repository(table_name, atributes, atributes_types)
-    ret = repo.
-    print(f"retorno: {ret}")
     
 
 if __name__ == "__main__":

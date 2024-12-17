@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from PIL import Image
-from View.Frames import table_display
+from View.Frames.table_view import *
 
 w_buttons = 50
 
@@ -14,11 +14,14 @@ class crud_display:
                  d_func, 
                  max_id_func, 
                  min_id_func,
-                 table_atributes_func, 
+                 table_atributes_func,
+                 pk_func, 
                  display):
 
         self.min_id_func = min_id_func
         self.max_id_func = max_id_func
+        self.table_atributes_func = table_atributes_func
+        self.pk_func = pk_func
 
         if not self.check_empty(r_func):
             self.check_min_max()
@@ -29,11 +32,12 @@ class crud_display:
 
         elements = []
 
-        plus_icon = Image.open("src\View\Icons\plus_icon.png")
+        plus_icon = Image.open(r"src\View\Icons\plus_icon.png")
         button_create = ctk.CTkButton(frame,
-                                      text="",
-                                      image=ctk.CTkImage(plus_icon), 
+                                      text="", 
                                       corner_radius=32, 
+
+                                      image=ctk.CTkImage(plus_icon),
                                       width=w_buttons,
                                       command=lambda: self.on_create(c_func, display[0]))
         elements.append(button_create)
@@ -47,7 +51,7 @@ class crud_display:
                                       command=lambda: u_func(display[0].get_info()))
         elements.append(button_update)
 
-        minus_icon = Image.open("src\View\Icons\minus_icon.png")
+        minus_icon = Image.open(r"src\View\Icons\minus_icon.png")
         button_delete = ctk.CTkButton(frame,
                                       text="",
                                       image=ctk.CTkImage(minus_icon), 
@@ -74,7 +78,7 @@ class crud_display:
                                   command= lambda: self.on_back(r_func, display[0]))
         elements.append(button_up)
         
-        browse_icon = Image.open("src\View\Icons\lines_icon.png")
+        browse_icon = Image.open(r"src\View\Icons\lines_icon.png")
         button_browse = ctk.CTkButton(frame,
                                       text="", 
                                       image=ctk.CTkImage(browse_icon), 
@@ -83,7 +87,7 @@ class crud_display:
                                       command=lambda: self.on_browse(table_atributes_func, r_func))
         elements.append(button_browse)
 
-        down_icon = Image.open("src\View\Icons\down_icon.png")
+        down_icon = Image.open(r"src\View\Icons\down_icon.png")
         button_down = ctk.CTkButton(frame,
                                     text="",
                                     image=ctk.CTkImage(down_icon), 
@@ -92,7 +96,7 @@ class crud_display:
                                     command=lambda: self.on_next(r_func, display[0]))
         elements.append(button_down)
 
-        last_icon = Image.open("src\View\Icons\last_icon.png")
+        last_icon = Image.open(r"src\View\Icons\last_icon.png")
         button_last = ctk.CTkButton(frame,
                                     text="",
                                     image=ctk.CTkImage(last_icon), 
@@ -105,7 +109,7 @@ class crud_display:
             elements[i].grid(row=0, column=i, padx=10, pady=10)
     
     def check_empty(self, func):
-        is_empty = func()[0] == []
+        is_empty = func() == []
         if is_empty:
             self.on_id = 0
             self.min_id = 0
@@ -122,55 +126,58 @@ class crud_display:
         self.check_min_max()
     
     def on_delete(self, func, display):
-        func(code=display.get_code())
+        func(index=display.get_pk(), index_name=self.pk_func())
         self.check_min_max()
 
     def on_first(self, func, display):
-        data = func(id="first")
-        self.on_id = data[0]
-        display.set_info(data[1])
+        data = func(index="first")[0]
+        print(data)
+        self.on_id = data[len(data)-1]
+        display.set_info(data)
         
 
     def on_last(self, func, display):
-        data = func(id="last")
-        self.on_id = data[0]
-        display.set_info(data[1])
+        data = func(index="last")[0]
+        print(data)
+        self.on_id = data[len(data)-1]
+        display.set_info(data)
 
     def on_back(self, func, display):
-        self.on_id = self.on_id
+        id = self.on_id
         while True:
             self.check_empty(func)
-            if not self.on_id == self.min_id:
-                self.on_id -= 1
-            data = func(id=self.on_id)
-            if (not data == -1) or self.on_id == 0:
+            if not id == self.min_id:
+                id -= 1
+            data = func(index=id, index_name="reg")
+            print(f"data: {data}")
+            if (not data == -1) or id == 0:
                 break
-
-        if not self.on_id == 0:
-            self.on_id = data[0]
-            display.set_info(data[1])
+        if not id == 0:
+            self.on_id = data[len(data)-1]
+            display.set_info(data)
 
     def on_next(self, func, display):
+        id = self.on_id
         while True:
             self.check_empty(func)
-            if not self.on_id == self.max_id:
-                self.on_id += 1
-            data = func(id=self.on_id)
-            print(f"{self.on_id}, {self.min_id}, {self.max_id}")
-            if (not data == -1) or self.on_id == 0:
+            if not id == self.max_id:
+                id += 1
+            data = func(index=id, index_name="reg")
+            print(f"data: {data}")
+            if (not data == -1) or id == 0:
                 break
-        if not self.on_id == 0:
-            self.on_id = data[0]
-            display.set_info(data[1])
+        if not id == 0:
+            self.on_id = data[len(data)-1]
+            display.set_info(data)
 
     def on_browse(self, head_func, data_func):
         dialog = ctk.CTk()
         dialog.title("Tabla Ciudades")
         headings = head_func()
-        data = data_func()[0]
+        data = data_func()
         print(f"headings: {headings}")
         print(f"data: {data}")
-        frame = table_display.table_display(dialog, headings, data)
+        frame = table_display(dialog, headings, data)
         dialog.mainloop()
 
 

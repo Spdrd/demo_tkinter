@@ -3,7 +3,7 @@ from tkinter import ttk
 
 class table_display():
     def __init__(self, app, headings, data):
-        frame = ctk.CTkFrame(app)
+        frame = ctk.CTkToplevel(app)
         frame.pack(expand=True, fill="both")
 
         table = ttk.Treeview(frame, columns=headings, show="headings")

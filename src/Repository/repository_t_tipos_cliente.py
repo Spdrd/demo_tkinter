@@ -1,4 +1,4 @@
-from repository import *
+from Repository.repository import *
 
 class repository_t_tipos_cliente(repository):
     def __init__(self):

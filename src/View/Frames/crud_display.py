@@ -22,6 +22,15 @@ class crud_display:
         self.max_id_func = max_id_func
         self.table_atributes_func = table_atributes_func
         self.pk_func = pk_func
+        plus_icon = Image.open(r"src\View\Icons\plus_icon.png")
+        update_icon = Image.open(r"src\View\Icons\update_icon.png")
+        minus_icon = Image.open(r"src\View\Icons\minus_icon.png")
+        first_icon = Image.open(r"src\View\Icons\first_icon.png")
+        up_icon = Image.open(r"src\View\Icons\up_icon.png")
+        browse_icon = Image.open(r"src\View\Icons\lines_icon.png")
+        down_icon = Image.open(r"src\View\Icons\down_icon.png")
+        last_icon = Image.open(r"src\View\Icons\last_icon.png")
+        self.icons = [plus_icon, update_icon, minus_icon, first_icon, up_icon, browse_icon, down_icon, last_icon]
 
         if not self.check_empty(r_func):
             self.check_min_max()
@@ -32,74 +41,82 @@ class crud_display:
 
         elements = []
 
-        plus_icon = Image.open(r"src\View\Icons\plus_icon.png")
+        i_icons = 0
+
         button_create = ctk.CTkButton(frame,
                                       text="", 
                                       corner_radius=32, 
 
-                                      image=ctk.CTkImage(plus_icon),
+                                      image=ctk.CTkImage(self.icons[i_icons]),
                                       width=w_buttons,
                                       command=lambda: self.on_create(c_func, display[0]))
         elements.append(button_create)
 
-        update_icon = Image.open(r"src\View\Icons\update_icon.png")
+        i_icons+=1
+        
         button_update = ctk.CTkButton(frame,
                                       text="",
-                                      image=ctk.CTkImage(update_icon), 
+                                      image=ctk.CTkImage(self.icons[i_icons]), 
                                       corner_radius=32, 
                                       width=w_buttons,
                                       command=lambda: u_func(display[0].get_info()))
         elements.append(button_update)
-
-        minus_icon = Image.open(r"src\View\Icons\minus_icon.png")
+        
+        i_icons+=1
+        
         button_delete = ctk.CTkButton(frame,
                                       text="",
-                                      image=ctk.CTkImage(minus_icon), 
+                                      image=ctk.CTkImage(self.icons[i_icons]), 
                                       corner_radius=32, 
                                       width=w_buttons,
                                       command=lambda: self.on_delete(d_func, display[0]))
         elements.append(button_delete)
-
-        first_icon = Image.open(r"src\View\Icons\first_icon.png")
+        
+        i_icons+=1
+        
         button_first = ctk.CTkButton(frame,
                                      text="",
-                                     image=ctk.CTkImage(first_icon), 
+                                     image=ctk.CTkImage(self.icons[i_icons]), 
                                      corner_radius=32, 
                                       width=w_buttons,
                                      command=lambda: self.on_first(r_func, display[0]))
         elements.append(button_first)
-
-        up_icon = Image.open(r"src\View\Icons\up_icon.png")
+        
+        i_icons+=1
+        
         button_up = ctk.CTkButton(frame,
                                   text="",
-                                  image=ctk.CTkImage(up_icon), 
+                                  image=ctk.CTkImage(self.icons[i_icons]), 
                                   corner_radius=32, 
                                   width=w_buttons,
                                   command= lambda: self.on_back(r_func, display[0]))
         elements.append(button_up)
         
-        browse_icon = Image.open(r"src\View\Icons\lines_icon.png")
+        i_icons+=1
+        
         button_browse = ctk.CTkButton(frame,
                                       text="", 
-                                      image=ctk.CTkImage(browse_icon), 
+                                      image=ctk.CTkImage(self.icons[i_icons]), 
                                       corner_radius=32,
                                       width=w_buttons,
                                       command=lambda: self.on_browse(table_atributes_func, r_func))
         elements.append(button_browse)
-
-        down_icon = Image.open(r"src\View\Icons\down_icon.png")
+        
+        i_icons+=1
+        
         button_down = ctk.CTkButton(frame,
                                     text="",
-                                    image=ctk.CTkImage(down_icon), 
+                                    image=ctk.CTkImage(self.icons[i_icons]), 
                                     corner_radius=32, 
                                     width=w_buttons,
                                     command=lambda: self.on_next(r_func, display[0]))
         elements.append(button_down)
-
-        last_icon = Image.open(r"src\View\Icons\last_icon.png")
+        
+        i_icons+=1
+        
         button_last = ctk.CTkButton(frame,
                                     text="",
-                                    image=ctk.CTkImage(last_icon), 
+                                    image=ctk.CTkImage(self.icons[i_icons]), 
                                     corner_radius=32, 
                                     width=w_buttons,
                                     command=lambda: self.on_last(r_func, display[0]))

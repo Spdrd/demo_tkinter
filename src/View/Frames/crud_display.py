@@ -16,6 +16,7 @@ class crud_display:
                  min_id_func,
                  table_atributes_func,
                  pk_func, 
+                 pdf_func,
                  display):
 
         self.min_id_func = min_id_func
@@ -30,7 +31,17 @@ class crud_display:
         browse_icon = Image.open(r"src\View\Icons\lines_icon.png")
         down_icon = Image.open(r"src\View\Icons\down_icon.png")
         last_icon = Image.open(r"src\View\Icons\last_icon.png")
-        self.icons = [plus_icon, update_icon, minus_icon, first_icon, up_icon, browse_icon, down_icon, last_icon]
+        pdf_icon = Image.open(r"src\View\Icons\pdf_icon.png")
+
+        self.icons = [plus_icon, 
+                      update_icon, 
+                      minus_icon, 
+                      first_icon, 
+                      up_icon, 
+                      browse_icon, 
+                      down_icon, 
+                      last_icon,
+                      pdf_icon]
 
         if not self.check_empty(r_func):
             self.check_min_max()
@@ -122,8 +133,21 @@ class crud_display:
                                     command=lambda: self.on_last(r_func, display[0]))
         elements.append(button_last)
 
+        i_icons+=1
+
+        button_pdf = ctk.CTkButton(frame,
+                                   text="", 
+                                   corner_radius=32, 
+                                   image=ctk.CTkImage(self.icons[i_icons]),
+                                   width=w_buttons,
+                                   command=lambda: self.on_pdf(pdf_func))
+        elements.append(button_pdf)
+
         for i in range(len(elements)):
             elements[i].grid(row=0, column=i, padx=10, pady=10)
+
+    def on_pdf(self, func):
+        func()
     
     def check_empty(self, func):
         is_empty = func() == []

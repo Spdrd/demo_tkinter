@@ -33,7 +33,7 @@ class repository:
     def create_table(self):
         try:
             # Establecer la conexión
-            conn = self.connect_db_by_json()
+            conn = self.connect_db()
             print("Conexión exitosa a la base de datos")
 
             # Crear un cursor para ejecutar consultas
@@ -63,12 +63,9 @@ class repository:
 
     def insert(self, data):
 
-        with open("src\Repository\db_config.json", "r") as file:
-            db_config = json.load(file)
-
         try:
             # Establecer la conexión
-            conn = self.connect_db_by_json()
+            conn = self.connect_db()
             print("Conexión exitosa a la base de datos")
 
             # Crear un cursor para ejecutar consultas
@@ -102,12 +99,9 @@ class repository:
 
     def read(self, index = "", index_name = ""):
 
-        with open("src\Repository\db_config.json", "r") as file:
-            db_config = json.load(file)
-
         try:
             # Establecer la conexión
-            conn = self.connect_db_by_json()
+            conn = self.connect_db()
             print("Conexión exitosa a la base de datos")
 
             # Crear un cursor para ejecutar consultas
@@ -154,12 +148,9 @@ class repository:
 
     def update(self, data: tuple):
 
-        with open("src\Repository\db_config.json", "r") as file:
-            db_config = json.load(file)
-
         try:
             # Establecer la conexión
-            conn = self.connect_db_by_json()
+            conn = self.connect_db()
             print("Conexión exitosa a la base de datos")
 
             # Crear un cursor para ejecutar consultas
@@ -207,12 +198,10 @@ class repository:
         if index_name == "":
             print("Indice no recibido") 
         else:
-            with open("src\Repository\db_config.json", "r") as file:
-                db_config = json.load(file)
 
             try:
                 # Establecer la conexión
-                conn = self.connect_db_by_json()
+                conn = self.connect_db()
                 print("Conexión exitosa a la base de datos")
 
                 # Crear un cursor para ejecutar consultas
@@ -244,12 +233,9 @@ class repository:
 
     def read_min_reg(self):
 
-        with open("src\Repository\db_config.json", "r") as file:
-            db_config = json.load(file)
-
         try:
             # Establecer la conexión
-            conn = self.connect_db_by_json()
+            conn = self.connect_db()
             print("Conexión exitosa a la base de datos")
 
             # Crear un cursor para ejecutar consultas
@@ -277,12 +263,9 @@ class repository:
 
     def read_max_reg(self):
 
-        with open("src\Repository\db_config.json", "r") as file:
-            db_config = json.load(file)
-
         try:
             # Establecer la conexión
-            conn = self.connect_db_by_json()
+            conn = self.connect_db()
             print("Conexión exitosa a la base de datos")
 
             # Crear un cursor para ejecutar consultas
@@ -309,12 +292,10 @@ class repository:
             return (data[0])
 
     def get_atributes(self):
-        with open("src\Repository\db_config.json", "r") as file:
-            db_config = json.load(file)
 
         try:
             # Establecer la conexión
-            conn = self.connect_db_by_json()
+            conn = self.connect_db()
             print("Conexión exitosa a la base de datos")
 
             # Crear un cursor para ejecutar consultas

@@ -2,13 +2,12 @@ from fpdf import FPDF
 
 class service_reporte_tabla:
 
-    def __init__(self, table_name, atributes, data):
+    def __init__(self, table_name, atributes):
 
         self.table_name = table_name
         self.atributes = atributes
-        self.data = data
 
-    def generate_document(self):
+    def generate_document(self, data):
 
         # Crear un objeto FPDF
         pdf = FPDF()
@@ -25,7 +24,7 @@ class service_reporte_tabla:
         
         pdf.ln()
         # Agregar filas
-        for row in self.data:
+        for row in data:
             for i in range(len(row)):
                 pdf.cell(40, 10, str(row[i]), border=1)
             pdf.ln()
@@ -38,7 +37,7 @@ class service_reporte_tabla:
         print(f"PDF generado: {nombre_pdf}")
 
 def main():
-    service_reporte_tabla("tabla", ("a", "b", "c"), [[1,2,3],[1,2,4]]).generate_document()
+    service_reporte_tabla("tabla", ("a", "b", "c")).generate_document([[1,2,3],[1,2,4]])
 
 if __name__ == "__main__":
     main()

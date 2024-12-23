@@ -140,14 +140,14 @@ class crud_display:
                                    corner_radius=32, 
                                    image=ctk.CTkImage(self.icons[i_icons]),
                                    width=w_buttons,
-                                   command=lambda: self.on_pdf(pdf_func))
+                                   command=lambda: self.on_pdf(r_func, pdf_func))
         elements.append(button_pdf)
 
         for i in range(len(elements)):
             elements[i].grid(row=0, column=i, padx=10, pady=10)
 
-    def on_pdf(self, func):
-        func()
+    def on_pdf(self, r_func, pdf_func):
+        pdf_func(r_func())
     
     def check_empty(self, func):
         is_empty = func() == []

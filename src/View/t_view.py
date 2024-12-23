@@ -7,10 +7,15 @@ from customtkinter import *
 class t_view:
 
     def __init__(self):
+        
         self.w = 700
         self.h = 400
 
         self.app.geometry(f"{self.w}x{self.h}")
+
+        title_frame = CTkLabel(self.app, text=self.title, font=("", 40))
+        title_frame.pack(padx=1, pady=3)
+        display_frame = self.data_display_frame(self.app)
         crud_display(self.app,
                                           self.repo.insert, 
                                           self.repo.read, 
@@ -21,4 +26,4 @@ class t_view:
                                           self.repo.get_atributes,
                                           self.repo.get_pk_atribute,
                                           self.s_reporte_tabla.generate_document,
-                                          [self.data_display_frame])
+                                          [display_frame])

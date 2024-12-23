@@ -14,10 +14,8 @@ class t_oficinas_view(t_view):
         self.repo = repository_t_oficinas()
         self.app = CTkToplevel()
         self.app.title("t_oficinas_view")
-        title_frame = CTkLabel(self.app, text=self.title, font=("", 40))
-        title_frame.pack(padx=1, pady=3)
         self.s_reporte_tabla = service_reporte_tabla(self.title, ("Codigo", "Oficina"))
-        self.data_display_frame = t_oficinas_display(self.app)
+        self.data_display_frame = t_oficinas_display
         super().__init__()
 
         self.app.mainloop()

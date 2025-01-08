@@ -1,5 +1,6 @@
 import psycopg2
 import json
+from resource_path import *
 
 class repository:
 
@@ -23,7 +24,8 @@ class repository:
 
 
     def connect_db_by_json(self):
-        with open("src\Repository\db_config.json", "r") as file:
+        config_path = resource_path("src\Repository\db_config.json")
+        with open(config_path, "r") as file:
             db_config = json.load(file)
         return psycopg2.connect(**db_config)
 

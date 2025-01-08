@@ -5,7 +5,7 @@ a = Analysis(
     ['src\\main.py'],
     pathex=['src'],
     binaries=[],
-    datas=[],
+    datas=[('src\\Repository\\db_config.json', 'src/Repository'), ('src/View/Icons/*', 'src/View/Icons')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

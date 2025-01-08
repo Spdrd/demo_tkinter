@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from PIL import Image
 from View.Frames.table_view import *
+from resource_path import *
 
 w_buttons = 50
 
@@ -23,15 +24,15 @@ class crud_display:
         self.max_id_func = max_id_func
         self.table_atributes_func = table_atributes_func
         self.pk_func = pk_func
-        plus_icon = Image.open(r"src\View\Icons\plus_icon.png")
-        update_icon = Image.open(r"src\View\Icons\update_icon.png")
-        minus_icon = Image.open(r"src\View\Icons\minus_icon.png")
-        first_icon = Image.open(r"src\View\Icons\first_icon.png")
-        up_icon = Image.open(r"src\View\Icons\up_icon.png")
-        browse_icon = Image.open(r"src\View\Icons\lines_icon.png")
-        down_icon = Image.open(r"src\View\Icons\down_icon.png")
-        last_icon = Image.open(r"src\View\Icons\last_icon.png")
-        pdf_icon = Image.open(r"src\View\Icons\pdf_icon.png")
+        plus_icon = Image.open(resource_path(r"src\View\Icons\plus_icon.png"))
+        update_icon = Image.open(resource_path(r"src\View\Icons\update_icon.png"))
+        minus_icon = Image.open(resource_path(r"src\View\Icons\minus_icon.png"))
+        first_icon = Image.open(resource_path(r"src\View\Icons\first_icon.png"))
+        up_icon = Image.open(resource_path(r"src\View\Icons\up_icon.png"))
+        browse_icon = Image.open(resource_path(r"src\View\Icons\lines_icon.png"))
+        down_icon = Image.open(resource_path(r"src\View\Icons\down_icon.png"))
+        last_icon = Image.open(resource_path(r"src\View\Icons\last_icon.png"))
+        pdf_icon = Image.open(resource_path(r"src\View\Icons\pdf_icon.png"))
 
         self.icons = [plus_icon, 
                       update_icon, 

@@ -13,7 +13,7 @@ class t_tipos_cliente_view(t_view):
         self.app = CTkToplevel()
         self.app.title("t_tipos_cliente_view")
         self.s_reporte_tabla = service_reporte_tabla(self.title, ("Codigo", "Tipo Cliente"))
-        self.data_display_frame = t_ciiu_display
+        self.data_display_frame = t_tipos_cliente_display
         super().__init__()
 
         self.app.mainloop()

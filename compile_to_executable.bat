@@ -1,1 +1,1 @@
-pyinstaller --onefile -F --paths=src src\main.py --add-data "src\Repository\db_config.json;src/Repository" --add-data "src/View/Icons/*;src/View/Icons"
+pyinstaller --noconsole --onefile -F --paths=src src\main.py --add-data "src\Repository\db_config.json;src/Repository" --add-data "src/View/Icons/*;src/View/Icons"

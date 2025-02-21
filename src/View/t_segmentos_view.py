@@ -14,7 +14,7 @@ class t_segmentos_view(t_view):
         self.app = CTkToplevel()
         self.app.title("t_segmentos_view")
         self.s_reporte_tabla = service_reporte_tabla(self.title, ("Codigo", "Segmentos"))
-        self.data_display_frame = t_ciiu_display
+        self.data_display_frame = t_segmentos_display
         super().__init__()
 
         self.app.mainloop()

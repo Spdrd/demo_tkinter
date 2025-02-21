@@ -12,7 +12,7 @@ class menu_view():
         # Crear la ventana principal
         self.app = CTk()
         self.app.geometry("400x300")
-        self.app.title("Ejemplo de ComboBox con Botón")
+        self.app.title("menu_view")
 
         # Etiqueta para el título
         titulo_label = CTkLabel(self.app, text="Selecciona una opción", font=("Arial", 18))
@@ -46,7 +46,7 @@ class menu_view():
         if seleccion:
             self.confirmacion_label.configure(text=f"Abriendo: {seleccion}")
         if seleccion == "Ciudades":
-            t_tipos_cliente_view()
+            t_ciudades_view()
         elif seleccion == "CIIU":
             t_ciiu_view()
         elif seleccion == "Oficinas":

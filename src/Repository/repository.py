@@ -4,16 +4,19 @@ from resource_path import *
 
 class repository:
 
-    def __init__(self, table_name: str, atributes: tuple, atributes_types: tuple):
+    def __init__(self, table_name: str, atributes: tuple, atributes_types: tuple, fk_atributes = (), fk_table = ()):
         self.table_name = table_name
         self.atributes = atributes
         self.atributes_types = atributes_types
+        self.fk_atributes = fk_atributes
+        self.fk_table = fk_table
         self.create_table()
     
     def get_pk_atribute(self):
         return self.atributes[0]
 
     def atributes_to_string(self):
+        
         str_atributes = "("
         for i in range(len(self.atributes)):
             str_atributes += self.atributes[i]
@@ -46,7 +49,13 @@ class repository:
                 query += f"{self.atributes[i]} {self.atributes_types[i]}"
                 if i+1 < len(self.atributes):
                     query += ","
+
+            for i in range (len(self.fk_atributes)):
+                    query += ","
+                    query += f"FOREIGN KEY ({self.fk_atributes[i]}) REFERENCES {self.fk_table[i]}({self.fk_atributes[i]}) ON DELETE RESTRICT"
             query += ")"
+
+            print(f"repository 57: {query}")
 
             cursor.execute(query)
 
@@ -126,7 +135,7 @@ class repository:
             else:
                 query = f"SELECT * FROM {self.table_name}"
 
-            print(query)
+            print(f"repository {query}")
             cursor.execute(query)
             conn.commit()
             if index_name == "":

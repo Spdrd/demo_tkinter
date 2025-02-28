@@ -6,7 +6,7 @@ from customtkinter import *
 
 class t_view:
 
-    def __init__(self):
+    def __init__(self, args_display = ()):
         
         self.w = 700
         self.h = 400
@@ -15,15 +15,21 @@ class t_view:
 
         title_frame = CTkLabel(self.app, text=self.title, font=("", 40))
         title_frame.pack(padx=1, pady=3)
-        display_frame = self.data_display_frame(self.app)
-        crud_display(self.app,
-                                          self.repo.insert, 
-                                          self.repo.read, 
-                                          self.repo.update, 
-                                          self.repo.delete, 
-                                          self.repo.read_max_reg, 
-                                          self.repo.read_min_reg,
-                                          self.repo.get_atributes,
-                                          self.repo.get_pk_atribute,
-                                          self.s_reporte_tabla.generate_document,
-                                          [display_frame])
+        if len(args_display) == 0:
+            display_frame = self.data_display_frame(self.app)
+        else:
+            display_frame = self.data_display_frame(self.app, args_display)
+
+        crud_display(
+            self.app,
+            self.repo.insert, 
+            self.repo.read, 
+            self.repo.update, 
+            self.repo.delete, 
+            self.repo.read_max_reg, 
+            self.repo.read_min_reg,
+            self.repo.get_atributes,
+            self.repo.get_pk_atribute,
+            self.s_reporte_tabla.generate_document,
+            [display_frame]
+        )
